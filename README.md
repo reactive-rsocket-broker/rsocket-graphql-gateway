@@ -3,6 +3,14 @@ RSocket GraphQL Gateway
 
 RSocket GraphQL Gateway is an HTTP entrance to access GraphQL Services that register on RSocket Broker.
 
+![GraphQL RSocket Gateway](grapql-rsocke-gateway.png)
+
+# Features
+
+* Load balance support for GraphQL Service
+* Access GraphQL Service by RSocket
+* Query merge support
+
 # Modules
 
 * rsocket-graphql-gateway: 基于RSocket的GraphQL HTTP Gateway
