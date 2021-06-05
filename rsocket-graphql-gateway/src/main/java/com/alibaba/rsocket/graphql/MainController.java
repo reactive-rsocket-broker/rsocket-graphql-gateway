@@ -31,7 +31,7 @@ import java.util.Map;
 public class MainController {
     @Autowired
     private JwtAuthenticationService authenticationService;
-    @Value("${restapi.auth-required}")
+    @Value("${graphql.auth-required}")
     private boolean authRequired;
     @Autowired
     private ObjectMapper objectMapper;
