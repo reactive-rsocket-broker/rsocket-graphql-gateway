@@ -13,9 +13,9 @@ import java.util.Map;
  */
 public interface GraphqlRSocketClient {
 
-    Mono<ByteBuf> query(String namespace, String query, Map<String, Object> variables);
+    Mono<ByteBuf> query(String query, Map<String, Object> variables);
 
-    Mono<ByteBuf> mutation(String namespace, String mutation, Map<String, Object> variables);
+    Mono<ByteBuf> mutation(String mutation, Map<String, Object> variables);
 
-    Flux<ByteBuf> subscription(String namespace, String subscription, Map<String, Object> variables);
+    Flux<ByteBuf> subscription(String subscription, Map<String, Object> variables);
 }
