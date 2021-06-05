@@ -1,0 +1,60 @@
+POST http://localhost:8383/{{service-namespace}}/graphql
+Content-Type: application/graphql
+
+query {
+  bookById(id: "book-1") {
+    id
+    name
+    pageCount
+    author {
+      firstName
+      lastName
+    }
+  }
+}
+
+### Query schema
+POST http://localhost:8383/{{service-namespace}}/graphql
+Content-Type: application/graphql
+
+{
+    __schema {
+      types {
+        name
+      }
+    }
+}
+
+### schema
+POST http://localhost:8383/{{service-namespace}}/graphql
+Content-Type: application/graphql
+
+query {
+    __schema {
+      types {
+        name
+      }
+    }
+}
+
+### Query type details
+POST http://localhost:8383/{{service-namespace}}/graphql
+Content-Type: application/graphql
+
+query {
+  __type(name: "Book") {
+    name
+    description
+    kind
+    fields {
+      name
+      type {
+        kind
+        ofType {
+          name
+          kind
+        }
+      }
+    }
+  }
+}
