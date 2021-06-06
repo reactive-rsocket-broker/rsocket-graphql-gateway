@@ -3,10 +3,12 @@ package com.alibaba.rsocket.graphql.book.impl;
 import graphql.schema.DataFetcher;
 import org.eclipse.collections.api.factory.Maps;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class GraphQLDataFetchers {
@@ -38,26 +40,24 @@ public class GraphQLDataFetchers {
                     "lastName", "Rice")
     );
 
-    public DataFetcher<Map<String, Object>> bookById() {
+    public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
         return dataFetchingEnvironment -> {
             String bookId = dataFetchingEnvironment.getArgument("id");
-            return BOOKS
-                    .stream()
+            return Flux.fromIterable(BOOKS)
                     .filter(book -> book.get("id").equals(bookId))
-                    .findFirst()
-                    .orElse(BOOKS.get(0));
+                    .next()
+                    .toFuture();
         };
     }
 
-    public DataFetcher<Map<String, String>> getAuthorDataFetcher() {
+    public DataFetcher<CompletableFuture<Map<String, String>>> getAuthorDataFetcher() {
         return dataFetchingEnvironment -> {
             Map<String, String> book = dataFetchingEnvironment.getSource();
             String authorId = book.get("authorId");
-            return AUTHORS
-                    .stream()
+            return Flux.fromIterable(AUTHORS)
                     .filter(author -> author.get("id").equals(authorId))
-                    .findFirst()
-                    .orElse(null);
+                    .next()
+                    .toFuture();
         };
     }
 }
