@@ -31,6 +31,34 @@ GraphQL和RSocket Broker对接，主要介入了service namespace的概念，也
 * namespace: 如 `com.alibaba.rsocket.graphql.book.BookGraphqlService` 在Gateway上对应的HTTP地址为 `http://localhost:8383/com.alibaba.rsocket.graphql.book.BookGraphqlService/graphql`
 * routing: 不同的namespace会路由到对应的服务提供者
 
+# GraphQL Reactive support
+
+* 异步执行graphQL.executeAsync()，将 CompletableFuture 转换为Mono
+
+```
+  public Mono<Object> execute(ExecutionInput executionInput) {
+        CompletableFuture<ExecutionResult> future = graphQL.executeAsync(executionInput);
+        return Mono.fromFuture(future).map(ExecutionResult::getData);
+    }
+```
+
+*  DataFetcher with CompletableFuture<T> Generic type
+
+```
+public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
+        return dataFetchingEnvironment -> {
+            String bookId = dataFetchingEnvironment.getArgument("id");
+            return Flux.fromIterable(BOOKS)
+                    .filter(book -> book.get("id").equals(bookId))
+                    .next()
+                    .toFuture();
+        };
+    }
+```
+
+通过这两种方式，就可以非常方便地支持GraphQL查询的异步化。当然CompletableFuture和Reactive之间转换也就非常简单啦。
+
 # References
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
+* GraphQL Specification: https://spec.graphql.org/June2018/
