@@ -62,3 +62,5 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
 * GraphQL Specification: https://spec.graphql.org/June2018/
+* GraphQL Java: https://www.graphql-java.com/
+* Netflix DGS: https://netflix.github.io/dgs/
