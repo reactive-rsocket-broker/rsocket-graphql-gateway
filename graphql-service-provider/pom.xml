@@ -17,6 +17,16 @@
             <artifactId>graphql-java</artifactId>
             <version>${graphql-java.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.netflix.graphql.dgs</groupId>
+            <artifactId>graphql-dgs-webflux-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- required by graphql-java-->
         <dependency>
             <groupId>com.google.guava</groupId>
