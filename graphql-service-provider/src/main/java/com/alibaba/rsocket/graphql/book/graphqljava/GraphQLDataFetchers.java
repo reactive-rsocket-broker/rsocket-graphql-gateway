@@ -2,6 +2,7 @@ package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import graphql.schema.DataFetcher;
 import org.eclipse.collections.api.factory.Maps;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Component
+@Profile("graphqljava")
 public class GraphQLDataFetchers {
 
     private static final List<Map<String, Object>> BOOKS = Arrays.asList(

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StreamUtils;
 
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
 @Configuration
+@Profile("graphqljava")
 public class GraphQLConfiguration {
     @Autowired
     GraphQLDataFetchers graphQLDataFetchers;
