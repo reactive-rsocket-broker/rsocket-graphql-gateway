@@ -58,6 +58,8 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 
 通过这两种方式，就可以非常方便地支持GraphQL查询的异步化。当然CompletableFuture和Reactive之间转换也就非常简单啦。
 
+个人建议： 如果你使用Netflix DGS GraphQL框架，那么从4.2.0开始，已经支持Mono/Flux作为Data Fetcher的返回类型，这样整合就更方便啦。
+
 # References
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
