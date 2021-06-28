@@ -64,3 +64,4 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 * GraphQL Specification: https://spec.graphql.org/June2018/
 * GraphQL Java: https://www.graphql-java.com/
 * Netflix DGS: https://netflix.github.io/dgs/
+* How Netflix Scales its API with GraphQL Federation: https://netflixtechblog.com/how-netflix-scales-its-api-with-graphql-federation-part-1-ae3557c187e2 https://netflixtechblog.com/how-netflix-scales-its-api-with-graphql-federation-part-2-bbe71aaec44a
