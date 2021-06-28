@@ -1,4 +1,4 @@
-package com.alibaba.rsocket.graphql.book.impl;
+package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import com.alibaba.rsocket.RSocketService;
 import com.alibaba.rsocket.graphql.GraphqlRSocketSupport;

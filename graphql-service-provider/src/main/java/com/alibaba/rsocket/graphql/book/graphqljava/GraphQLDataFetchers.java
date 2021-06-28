@@ -1,4 +1,4 @@
-package com.alibaba.rsocket.graphql.book.impl;
+package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import graphql.schema.DataFetcher;
 import org.eclipse.collections.api.factory.Maps;

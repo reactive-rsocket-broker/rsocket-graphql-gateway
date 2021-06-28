@@ -1,6 +1,5 @@
-package com.alibaba.rsocket.graphql.book;
+package com.alibaba.rsocket.graphql.book.graphqljava;
 
-import com.alibaba.rsocket.graphql.book.impl.GraphQLDataFetchers;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
@@ -22,7 +21,7 @@ import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 public class GraphQLConfiguration {
     @Autowired
     GraphQLDataFetchers graphQLDataFetchers;
-    @Value("classpath:schema.graphqls")
+    @Value("classpath:schema/schema.graphqls")
     private Resource graphqlsResource;
 
     private GraphQLSchema buildSchema(String sdl) {
