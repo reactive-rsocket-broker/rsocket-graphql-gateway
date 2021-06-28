@@ -14,7 +14,7 @@ RSocket GraphQL Gateway is an HTTP entrance to access GraphQL Services that regi
 # Modules
 
 * rsocket-graphql-gateway: 基于RSocket的GraphQL HTTP Gateway
-* graphql-service-provider: GraphQL的RSocket服务提供者
+* graphql-service-provider: GraphQL的RSocket服务提供者，使用Netflix DGS框架
 * graphql-rsocket-support: 支持GraphQL服务快速接入到RSocket Broker
 
 # How to start?
@@ -32,6 +32,26 @@ GraphQL和RSocket Broker对接，主要介入了service namespace的概念，也
 * routing: 不同的namespace会路由到对应的服务提供者
 
 # GraphQL Reactive support
+
+### DGS
+
+DGS 4.2.0版本后添加了Data Fetch的Mono/Flux返回类型支持，所以Reactive就内置啦，样例代码如下：
+
+```
+    @DgsQuery(field = "bookById")
+    public Mono<Book> bookById(@InputArgument String id) {
+        Book book = BOOKS.get(id);
+        if (book == null) {
+            return Mono.empty();
+        } else {
+            return Mono.just(book);
+        }
+    }
+```
+
+如果是列表类型，返回Flux就可以啦。
+
+### GraphQL Java
 
 * 异步执行graphQL.executeAsync()，将 CompletableFuture 转换为Mono
 
@@ -57,8 +77,6 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 ```
 
 通过这两种方式，就可以非常方便地支持GraphQL查询的异步化。当然CompletableFuture和Reactive之间转换也就非常简单啦。
-
-个人建议： 如果你使用Netflix DGS GraphQL框架，那么从4.2.0开始，已经支持Mono/Flux作为Data Fetcher的返回类型，这样整合就更方便啦。
 
 # References
 
