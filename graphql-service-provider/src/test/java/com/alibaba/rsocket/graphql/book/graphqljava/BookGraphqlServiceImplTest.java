@@ -1,6 +1,7 @@
-package com.alibaba.rsocket.graphql.book.impl;
+package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import com.alibaba.rsocket.graphql.book.SpringBootBaseTest;
+import com.alibaba.rsocket.graphql.book.graphqljava.BookGraphqlServiceImpl;
 import graphql.ExecutionInput;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
