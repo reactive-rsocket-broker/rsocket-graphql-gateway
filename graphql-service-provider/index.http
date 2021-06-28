@@ -1,0 +1,14 @@
+POST http://localhost:8180/graphql
+Content-Type: application/graphql
+
+query {
+  bookById(id: "book-1") {
+    id
+    name
+    pageCount
+    author {
+      firstName
+      lastName
+    }
+  }
+}
