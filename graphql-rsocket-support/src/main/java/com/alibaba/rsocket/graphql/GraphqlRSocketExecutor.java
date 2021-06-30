@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -46,5 +47,30 @@ public interface GraphqlRSocketExecutor {
      * @return json map of the result that strictly follows the GraphQL spec
      */
     Mono<ByteBuf> execute(ByteBuf invocationData);
+
+    /**
+     * GraphQL subscribe
+     *
+     * @param subscription subscription
+     * @return data flux
+     */
+    default Flux<Map<String, Object>> subscribe(@Language("GraphQL") @NotNull String subscription) {
+        return subscribe(subscription, null);
+    }
+
+    /**
+     * GraphQL subscribe
+     *
+     * @param subscription subscription
+     * @param variables    variables
+     * @return data flux
+     */
+    default Flux<Map<String, Object>> subscribe(@Language("GraphQL") @NotNull String subscription,
+                                                @Nullable Map<String, Object> variables) {
+        return subscribe(GraphqlJsonUtils.queryToJsonByteBuf(subscription, variables, null))
+                .map(GraphqlJsonUtils::convertResultToMap);
+    }
+
+    Flux<ByteBuf> subscribe(ByteBuf invocationData);
 
 }
