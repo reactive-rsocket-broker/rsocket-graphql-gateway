@@ -1,8 +1,8 @@
 package com.alibaba.rsocket.graphql.book.dgs;
 
 import com.alibaba.rsocket.RSocketService;
+import com.alibaba.rsocket.graphql.GraphqlRSocketExecutor;
 import com.alibaba.rsocket.graphql.GraphqlRSocketSupport;
-import com.alibaba.rsocket.graphql.book.BookGraphqlService;
 import com.netflix.graphql.dgs.reactive.DgsReactiveQueryExecutor;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 
-@RSocketService(serviceInterface = BookGraphqlService.class)
+@RSocketService(serviceInterface = GraphqlRSocketExecutor.class, group = "book")
 @Component
-public class BookGraphqlServiceDGSImpl extends GraphqlRSocketSupport implements BookGraphqlService {
+public class GraphqlServiceDGSImpl extends GraphqlRSocketSupport implements GraphqlRSocketExecutor {
     @Autowired
     private DgsReactiveQueryExecutor reactiveQueryExecutor;
 
