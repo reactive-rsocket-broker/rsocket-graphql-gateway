@@ -78,6 +78,14 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 
 通过这两种方式，就可以非常方便地支持GraphQL查询的异步化。当然CompletableFuture和Reactive之间转换也就非常简单啦。
 
+# GraphQL gateway职责
+
+* 查询所有GraphQL服务提供方的schema结构，确保这些服务提供方的GraphQL schema不会冲突。
+* 通过调用GraphQL服务提供方的API完成对相关服务的验证。
+* 当请求到达gateway时，Gateway要负责基于Query/Mutation完成对应的服务匹配
+* 并行执行服务调用，等待服务响应。可以考虑Reactive方案，也就是flatmap。
+* 对响应的数据进行合并处理，然后返回给请求方；如果有错误的话，也要进行返回。
+
 # References
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
