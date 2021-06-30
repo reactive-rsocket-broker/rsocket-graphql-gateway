@@ -97,6 +97,16 @@ public DataFetcher<CompletableFuture<Map<String, Object>>> bookById() {
 * 并行执行服务调用，等待服务响应。可以考虑Reactive方案，也就是flatmap。
 * 对响应的数据进行合并处理，然后返回给请求方；如果有错误的话，也要进行返回。
 
+# 如何合并多个GraphQL schema?
+
+我们只需要执行TypeDefinitionRegistry的merge操作即可。
+
+```
+TypeDefinitionRegistry typeDefinitionRegistry1 = new SchemaParser().parse(schema1);
+TypeDefinitionRegistry typeDefinitionRegistry2 = new SchemaParser().parse(schema2);
+TypeDefinitionRegistry mergedDefinitionRegistry = typeDefinitionRegistry1.merge(typeDefinitionRegistry2);
+```
+
 # References
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
