@@ -1,7 +1,6 @@
 package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import com.alibaba.rsocket.graphql.book.SpringBootBaseTest;
-import com.alibaba.rsocket.graphql.book.graphqljava.BookGraphqlServiceImpl;
 import graphql.ExecutionInput;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,10 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BookGraphqlServiceImplTest extends SpringBootBaseTest {
+public class GraphqlServiceImplTest extends SpringBootBaseTest {
 
     @Autowired
-    private BookGraphqlServiceImpl graphqlService;
+    private GraphqlServiceImpl graphqlService;
 
     @SuppressWarnings("unchecked")
     @Test
