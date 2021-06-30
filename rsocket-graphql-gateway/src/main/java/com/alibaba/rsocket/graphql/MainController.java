@@ -37,14 +37,15 @@ public class MainController {
     private ObjectMapper objectMapper;
     private static final MessageMimeTypeMetadata graphqlEncoding = new MessageMimeTypeMetadata(RSocketMimeType.Binary);
     private final RSocket rsocket;
+    private static final String GRAPHQL_SERVICE_NAME = "com.alibaba.rsocket.graphql.GraphqlRSocketExecutor";
 
     public MainController(UpstreamManager upstreamManager) {
         rsocket = upstreamManager.findBroker().getLoadBalancedRSocket();
     }
 
-    @RequestMapping(value = "/{serviceName}/graphql", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{clusterName}/graphql", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ByteBuf>> graphqlGET(
-            @PathVariable("serviceName") String serviceName,
+            @PathVariable("clusterName") String clusterName,
             @RequestParam("query") String query,
             @RequestParam(value = "operationName", required = false) String operationName,
             @RequestParam(value = "variables", required = false) String variablesJson,
@@ -54,12 +55,12 @@ public class MainController {
         invocationData.setQuery(query);
         invocationData.setOperationName(operationName);
         invocationData.setVariables(convertVariablesJson(variablesJson));
-        return executeRequest(serviceName, invocationData, authorizationValue);
+        return executeRequest(clusterName, invocationData, authorizationValue);
     }
 
 
-    @PostMapping(value = "/{serviceName}/graphql", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Mono<ResponseEntity<ByteBuf>> graphqlPost(@PathVariable("serviceName") String serviceName,
+    @PostMapping(value = "/{clusterName}/graphql", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Mono<ResponseEntity<ByteBuf>> graphqlPost(@PathVariable("clusterName") String clusterName,
                                                      @RequestParam(value = "query", required = false) String query,
                                                      @RequestParam(value = "operationName", required = false) String operationName,
                                                      @RequestParam(value = "variables", required = false) String variablesJson,
@@ -84,10 +85,10 @@ public class MainController {
                 invocationData.setVariables(convertVariablesJson(variablesJson));
             }
         }
-        return executeRequest(serviceName, invocationData, authorizationValue);
+        return executeRequest(clusterName, invocationData, authorizationValue);
     }
 
-    private Mono<ResponseEntity<ByteBuf>> executeRequest(String serviceName,
+    private Mono<ResponseEntity<ByteBuf>> executeRequest(String clusterName,
                                                          GraphQLInvocationData invocationData,
                                                          String authorizationValue) {
         boolean authenticated;
@@ -100,7 +101,7 @@ public class MainController {
             return Mono.error(new Exception(RsocketErrorCode.message("RST-500403")));
         }
         try {
-            GSVRoutingMetadata routingMetadata = new GSVRoutingMetadata("", serviceName, "execute", "");
+            GSVRoutingMetadata routingMetadata = new GSVRoutingMetadata(clusterName, GRAPHQL_SERVICE_NAME, "execute", "");
             RSocketCompositeMetadata compositeMetadata = RSocketCompositeMetadata.from(routingMetadata, graphqlEncoding);
             ByteBuf bodyBuf = Unpooled.wrappedBuffer(objectMapper.writeValueAsBytes(invocationData));
             return rsocket.requestResponse(ByteBufPayload.create(bodyBuf, compositeMetadata.getContent()))
