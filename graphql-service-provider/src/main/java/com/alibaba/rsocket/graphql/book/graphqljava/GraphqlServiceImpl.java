@@ -6,9 +6,11 @@ import com.alibaba.rsocket.graphql.GraphqlRSocketSupport;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,5 +27,12 @@ public class GraphqlServiceImpl extends GraphqlRSocketSupport implements Graphql
     public Mono<ExecutionResult> execute(ExecutionInput executionInput) {
         CompletableFuture<ExecutionResult> future = graphQL.executeAsync(executionInput);
         return Mono.fromFuture(future);
+    }
+
+    @Override
+    public Flux<ExecutionResult> subscribe(ExecutionInput executionInput) {
+        CompletableFuture<ExecutionResult> future = graphQL.executeAsync(executionInput);
+        return Mono.fromFuture(future).flatMapMany(executionResult -> Flux.from(executionResult.<Publisher<ExecutionResult>>getData()));
+
     }
 }
