@@ -1,8 +1,8 @@
 package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import com.alibaba.rsocket.RSocketService;
+import com.alibaba.rsocket.graphql.GraphqlRSocketExecutor;
 import com.alibaba.rsocket.graphql.GraphqlRSocketSupport;
-import com.alibaba.rsocket.graphql.book.BookGraphqlService;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
@@ -11,14 +11,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
 
-@RSocketService(serviceInterface = BookGraphqlService.class)
+@RSocketService(serviceInterface = GraphqlRSocketExecutor.class, group = "book")
 @Component
 @Profile("graphqljava")
-public class BookGraphqlServiceImpl extends GraphqlRSocketSupport implements BookGraphqlService {
+public class GraphqlServiceImpl extends GraphqlRSocketSupport implements GraphqlRSocketExecutor {
     @Autowired
     private GraphQL graphQL;
 
