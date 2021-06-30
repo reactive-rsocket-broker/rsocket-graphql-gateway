@@ -2,6 +2,7 @@ package com.alibaba.rsocket.graphql.book.graphqljava;
 
 import graphql.schema.DataFetcher;
 import org.eclipse.collections.api.factory.Maps;
+import org.reactivestreams.Publisher;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -60,6 +61,12 @@ public class GraphQLDataFetchers {
                     .filter(author -> author.get("id").equals(authorId))
                     .next()
                     .toFuture();
+        };
+    }
+
+    public DataFetcher<Publisher<Map<String, Object>>> subscriptionDataFetcher() {
+        return dataFetchingEnvironment -> {
+            return Flux.fromIterable(BOOKS);
         };
     }
 }
