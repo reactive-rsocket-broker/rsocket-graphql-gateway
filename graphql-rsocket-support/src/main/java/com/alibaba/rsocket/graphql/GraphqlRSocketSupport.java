@@ -2,6 +2,7 @@ package com.alibaba.rsocket.graphql;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.ExecutionInput;
+import graphql.ExecutionResult;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import reactor.core.publisher.Mono;
@@ -14,7 +15,7 @@ import java.util.Map;
  *
  * @author leijuan
  */
-public abstract class GraphqlRSocketSupport implements GraphqlRSocketService {
+public abstract class GraphqlRSocketSupport implements GraphqlRSocketExecutor {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @SuppressWarnings("unchecked")
@@ -38,13 +39,13 @@ public abstract class GraphqlRSocketSupport implements GraphqlRSocketService {
                 builder.variables(variables);
             }
             ExecutionInput executionInput = builder.build();
-            return execute(executionInput).map(result -> Unpooled.wrappedBuffer(json(result)));
+            return execute(executionInput).map(result -> Unpooled.wrappedBuffer(json(result.toSpecification())));
         } catch (Exception e) {
             return Mono.error(e);
         }
     }
 
-    public abstract Mono<Object> execute(ExecutionInput executionInput);
+    public abstract Mono<ExecutionResult> execute(ExecutionInput executionInput);
 
 
     private byte[] json(Object obj) {
