@@ -26,10 +26,21 @@ RSocket GraphQL Gateway is an HTTP entrance to access GraphQL Services that regi
 
 # 工作原理
 
-GraphQL和RSocket Broker对接，主要介入了service namespace的概念，也就是不同的GraphQL Schema使用不同的服务分组
+对于GraphQL来说，服务接口非常简单，就是 "com.alibaba.rsocket.graphql.GraphqlRSocketExecutor"，所有的GraphQL服务都是以该接口对外发布。
+那么不同的GraphQL服务如何来区分，如会员和商品就是不同的GraphQL服务分组。 这里我们使用RSocket服务的group概念，不同GraphQL服务分组使用不同的group，
+如果会员GraphQL服务使用"user" group, 商品GraphQL服务使用"item" group，这样我们就可以区分开不同的服务。
 
-* namespace: 如 `com.alibaba.rsocket.graphql.book.BookGraphqlService` 在Gateway上对应的HTTP地址为 `http://localhost:8383/com.alibaba.rsocket.graphql.book.BookGraphqlService/graphql`
+在GraphQL Gateway，我们也使用分组作为服务的namespace，具体解释如下：
+
+* namespace: 如 `user`，对应于GraphQL的服务分组， 在Gateway上对应的HTTP地址为 `http://localhost:8383/user/graphql`
 * routing: 不同的namespace会路由到对应的服务提供者
+
+如何设置GraphQL服务的分组信息？ 如何将GraphQL对应的schema提交给RSocket Broker？ 你只需要在`application.properties` 添加以下设置：
+
+```
+rsocket.group=user
+rsocket.metadata.graphqls=classpath:schema/schema.graphqls
+```
 
 # GraphQL Reactive support
 
