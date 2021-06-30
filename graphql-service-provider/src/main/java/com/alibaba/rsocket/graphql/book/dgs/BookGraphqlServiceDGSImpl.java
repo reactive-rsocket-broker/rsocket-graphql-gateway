@@ -5,11 +5,10 @@ import com.alibaba.rsocket.graphql.GraphqlRSocketSupport;
 import com.alibaba.rsocket.graphql.book.BookGraphqlService;
 import com.netflix.graphql.dgs.reactive.DgsReactiveQueryExecutor;
 import graphql.ExecutionInput;
+import graphql.ExecutionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.util.Collections;
 
 
 @RSocketService(serviceInterface = BookGraphqlService.class)
@@ -19,8 +18,9 @@ public class BookGraphqlServiceDGSImpl extends GraphqlRSocketSupport implements 
     private DgsReactiveQueryExecutor reactiveQueryExecutor;
 
     @Override
-    public Mono<Object> execute(ExecutionInput executionInput) {
-        return reactiveQueryExecutor.execute(executionInput.getQuery(), executionInput.getVariables(), executionInput.getOperationName())
-                .map(executionResult -> Collections.singletonMap("data", executionResult.getData()));
+    public Mono<ExecutionResult> execute(ExecutionInput executionInput) {
+        return reactiveQueryExecutor.execute(executionInput.getQuery(),
+                executionInput.getVariables(),
+                executionInput.getOperationName());
     }
 }

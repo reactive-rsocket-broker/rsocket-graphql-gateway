@@ -23,8 +23,8 @@ public class BookGraphqlServiceImpl extends GraphqlRSocketSupport implements Boo
     private GraphQL graphQL;
 
     @Override
-    public Mono<Object> execute(ExecutionInput executionInput) {
+    public Mono<ExecutionResult> execute(ExecutionInput executionInput) {
         CompletableFuture<ExecutionResult> future = graphQL.executeAsync(executionInput);
-        return Mono.fromFuture(future).map(executionResult -> Collections.singletonMap("data", executionResult.getData()));
+        return Mono.fromFuture(future);
     }
 }
