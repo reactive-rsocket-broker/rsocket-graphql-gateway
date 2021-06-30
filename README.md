@@ -107,6 +107,17 @@ TypeDefinitionRegistry typeDefinitionRegistry2 = new SchemaParser().parse(schema
 TypeDefinitionRegistry mergedDefinitionRegistry = typeDefinitionRegistry1.merge(typeDefinitionRegistry2);
 ```
 
+# Gateway如何路由请求GraphQL请求？
+对应GraphQL Gateway来说，其本身并不程度具体的GraphQL请求执行，而是将请求转发给下游的GraphQL服务方，这个时候只需要为Type类型提供一个默认的DataFetcher，然后该默认的DataFetcher再和远程GraphQL进行交互，完成数据的返回，如下：
+
+```
+  RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
+                .type("Query", builder -> builder.defaultDataFetcher(dfe -> { ... }))
+                .build();
+```
+
+Gateway会维护一个合并后的大的GraphQL Schema，所以对每一个Query/Mutation请求来说，Gateway都能跟踪到query field的原始来源，然后再将请求发给远程的GraphQL服务即可。
+
 # References
 
 * Alibaba RSocket Broker: https://github.com/alibaba/alibaba-rsocket-broker
