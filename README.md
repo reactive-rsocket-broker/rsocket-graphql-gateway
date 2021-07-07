@@ -124,4 +124,5 @@ Gateway会维护一个合并后的大的GraphQL Schema，所以对每一个Query
 * GraphQL Specification: https://spec.graphql.org/June2018/
 * GraphQL Java: https://www.graphql-java.com/
 * Netflix DGS: https://netflix.github.io/dgs/
+* Spring GraphQL: https://github.com/spring-projects/spring-graphql
 * How Netflix Scales its API with GraphQL Federation: https://netflixtechblog.com/how-netflix-scales-its-api-with-graphql-federation-part-1-ae3557c187e2 https://netflixtechblog.com/how-netflix-scales-its-api-with-graphql-federation-part-2-bbe71aaec44a
