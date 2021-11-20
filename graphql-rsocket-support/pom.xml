@@ -11,20 +11,23 @@
     <description>GraphQL RSocket support</description>
 
     <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <graphql-java.version>16.2</graphql-java.version>
+        <graphql-java.version>17.3</graphql-java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.alibaba.rsocket</groupId>
             <artifactId>alibaba-rsocket-service-common</artifactId>
-            <version>1.1.1-SNAPSHOT</version>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.12.3</version>
+            <version>2.13.0</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
@@ -40,8 +43,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
                     <parameters>true</parameters>
                 </configuration>
             </plugin>
