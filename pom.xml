@@ -24,10 +24,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-boot.version>2.5.7</spring-boot.version>
         <rsocket.version>1.1.1</rsocket.version>
-        <alibaba-rsocket.version>1.1.1</alibaba-rsocket.version>
-        <junit5.version>5.8.1</junit5.version>
+        <alibaba-rsocket.version>1.1.2</alibaba-rsocket.version>
+        <junit5.version>5.8.2</junit5.version>
         <graphql-java.version>17.3</graphql-java.version>
-        <graphql-dgs.version>4.9.7</graphql-dgs.version>
+        <graphql-dgs.version>4.9.11</graphql-dgs.version>
     </properties>
 
     <dependencies>
